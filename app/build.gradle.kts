@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -33,6 +34,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    kapt {
+        correctErrorTypes = true
+        useBuildCache = true
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -70,4 +77,8 @@ dependencies {
 
     // Kotlin + coroutines
     implementation(libs.androidx.work.runtime.ktx)
+
+    implementation("androidx.room:room-runtime:2.5.0") // Библиотека "Room"
+    kapt("androidx.room:room-compiler:2.5.0") // Кодогенератор
+    implementation("androidx.room:room-ktx:2.5.0")
 }
