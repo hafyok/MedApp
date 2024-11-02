@@ -11,35 +11,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.work.Constraints
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.ui.theme.WorkManagerTheme
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
-    val constraints = Constraints.Builder()
-        .setRequiresCharging(true)
-        .build()
-
-    val workRequest = OneTimeWorkRequestBuilder<MyWorker>()
-        .setConstraints(constraints)
-        .addTag("myTask")
-        .build()
-
-    val otherWorkRequest = OneTimeWorkRequestBuilder<OtherWorker>()
-        .addTag("otherTask")
-        .build()
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Dependencies.init(applicationContext)
+        val medicamentRepository = Dependencies.medicamentRepository
         super.onCreate(savedInstanceState)
 
-        WorkManager.getInstance(this)
-            .beginWith(workRequest)
-            .then(otherWorkRequest)
-            .enqueue()
+        GlobalScope.launch {
+            medicamentRepository.insertMedicament(MedicamentEntity(1, "Нурофен ", 4f))
+        }
 
         enableEdgeToEdge()
         setContent {
