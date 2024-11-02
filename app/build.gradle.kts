@@ -78,7 +78,7 @@ dependencies {
     // Kotlin + coroutines
     implementation(libs.androidx.work.runtime.ktx)
 
-    implementation("androidx.room:room-runtime:2.5.0") // Библиотека "Room"
-    kapt("androidx.room:room-compiler:2.5.0") // Кодогенератор
-    implementation("androidx.room:room-ktx:2.5.0")
+    implementation(libs.androidx.room.runtime) // Библиотека "Room"
+    kapt(libs.androidx.room.compiler) // Кодогенератор
+    implementation(libs.androidx.room.ktx)
 }
