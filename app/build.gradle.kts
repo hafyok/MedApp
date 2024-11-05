@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("org.jetbrains.kotlin.kapt")
+    //id("org.jetbrains.kotlin.kapt")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -81,4 +83,7 @@ dependencies {
     implementation(libs.androidx.room.runtime) // Библиотека "Room"
     kapt(libs.androidx.room.compiler) // Кодогенератор
     implementation(libs.androidx.room.ktx)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 }
