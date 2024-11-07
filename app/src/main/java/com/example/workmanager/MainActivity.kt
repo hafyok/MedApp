@@ -10,13 +10,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.workmanager.presentation.MainScreen
 import com.example.workmanager.ui.theme.WorkManagerTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        Dependencies.init(applicationContext)
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
