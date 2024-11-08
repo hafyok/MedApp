@@ -1,5 +1,6 @@
 package com.example.workmanager.presentation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,7 +28,9 @@ fun MainScreen(
     val medicaments by viewModel.medicaments.observeAsState(emptyList())  // Задаем пустой список по умолчанию
     val showDialog = remember { mutableStateOf(false) }
 
-    if (showDialog.value) AddDialog(value = "", setShowDialog = {showDialog.value = it})
+    if (showDialog.value) AddDialog(value = "", setShowDialog = {showDialog.value = it}){
+        Log.i("MainPage", "MainPage: $it")
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
