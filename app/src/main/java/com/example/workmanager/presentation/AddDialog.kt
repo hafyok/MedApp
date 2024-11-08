@@ -33,7 +33,7 @@ import androidx.compose.ui.window.Dialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String) -> Unit) {
+fun AddDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String) -> Unit, addMedicament: (String) -> Unit) {
     val txtFieldError = remember { mutableStateOf("") }
     val txtField = remember { mutableStateOf(value) }
     Dialog(onDismissRequest = { setShowDialog(false) }) {
@@ -87,6 +87,7 @@ fun AddDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String
                                 return@Button
                             }
                             setValue(txtField.value)
+                            addMedicament(txtField.value)
                             setShowDialog(false)
                         },
                         shape = RoundedCornerShape(50.dp),

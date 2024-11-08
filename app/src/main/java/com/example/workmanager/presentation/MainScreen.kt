@@ -1,6 +1,5 @@
 package com.example.workmanager.presentation
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.workmanager.data.MedicamentEntity
 
 @Preview
 @Composable
@@ -25,33 +25,31 @@ fun MainScreen(
     viewModel: MedicamentViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val medicaments by viewModel.medicaments.observeAsState(emptyList())  // Задаем пустой список по умолчанию
+    val medicaments by viewModel.medicaments.observeAsState(emptyList())
     val showDialog = remember { mutableStateOf(false) }
 
-    if (showDialog.value) AddDialog(value = "", setShowDialog = {showDialog.value = it}){
-        Log.i("MainPage", "MainPage: $it")
+    if (showDialog.value) {
+        AddDialog(
+            value = "",
+            setShowDialog = { showDialog.value = it },
+            setValue = {},
+            addMedicament = { name ->
+                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f))
+            }
+        )
     }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                showDialog.value = true
-                /*viewModel.insertMedicamentInDb(
-                    MedicamentEntity(
-                        0,
-                        "Панацея а мб нет",
-                        2f
-                    )
-                )*/
-            }) {
+            FloatingActionButton(onClick = { showDialog.value = true }) {
                 Text(text = "Добавить лекарство", modifier = Modifier.padding(8.dp))
             }
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             LazyColumn(modifier = Modifier.padding(8.dp)) {
-                items(medicaments) { item ->  // Теперь medicaments всегда не null
+                items(medicaments) { item ->
                     Text(text = item.name)
                 }
             }
