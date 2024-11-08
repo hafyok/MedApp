@@ -1,6 +1,7 @@
 package com.example.workmanager.presentation
 
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workmanager.data.AppDB
@@ -13,13 +14,13 @@ import javax.inject.Inject
 class MedicamentViewModel @Inject constructor(
     val appDB: AppDB
 ): ViewModel() {
-    val medimcaments = mutableStateOf(emptyList<MedicamentEntity>())
+    val medicaments: LiveData<List<MedicamentEntity>> = appDB.dao.getMedicaments()
 
     fun insertMedicamentInDb(medicamentEntity: MedicamentEntity) = viewModelScope.launch{
         appDB.dao.insertMedicament(medicamentEntity)
     }
 
-    fun getMedicamentFromDb() = viewModelScope.launch {
+    /*fun getMedicamentFromDb() = viewModelScope.launch {
         medimcaments.value = appDB.dao.getMedicaments()
-    }
+    }*/
 }

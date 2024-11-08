@@ -1,5 +1,6 @@
 package com.example.workmanager.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,5 +12,5 @@ interface MedicamentDao {
     fun insertMedicament(med: MedicamentEntity)
 
     @Query("SELECT * FROM medicaments")
-    fun getMedicaments(): List<MedicamentEntity>
+    fun getMedicaments(): LiveData<List<MedicamentEntity>>
 }

@@ -3,6 +3,7 @@ package com.example.workmanager.data
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/*
 class MedicamentRepository(private val medicamentDao: MedicamentDao) {
     suspend fun insertMedicament(med: MedicamentEntity) {
         withContext(Dispatchers.IO) {
@@ -15,4 +16,4 @@ class MedicamentRepository(private val medicamentDao: MedicamentDao) {
             return@withContext medicamentDao.getMedicaments()
         }
     }
-}
+}*/

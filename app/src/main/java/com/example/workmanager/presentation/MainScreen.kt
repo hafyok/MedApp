@@ -11,6 +11,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,33 +25,28 @@ fun MainScreen(
     viewModel: MedicamentViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val medicaments = viewModel.medimcaments.value
+    val medicaments by viewModel.medicaments.observeAsState(emptyList())  // Задаем пустой список по умолчанию
 
-    LaunchedEffect(Unit) {
-        viewModel.getMedicamentFromDb()
-    }
-
-    Scaffold(modifier = Modifier.fillMaxSize(),
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 viewModel.insertMedicamentInDb(
                     MedicamentEntity(
                         0,
-                        "Панацея",
+                        "Панацея а мб нет",
                         2f
                     )
                 )
-            })
-            {
+            }) {
                 Text(text = "Добавить лекарство", modifier = Modifier.padding(8.dp))
             }
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             LazyColumn(modifier = Modifier.padding(8.dp)) {
-                items(medicaments){ item ->
+                items(medicaments) { item ->  // Теперь medicaments всегда не null
                     Text(text = item.name)
-
                 }
             }
         }

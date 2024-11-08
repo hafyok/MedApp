@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.workmanager.data.AppDB
-import com.example.workmanager.data.MedicamentRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
