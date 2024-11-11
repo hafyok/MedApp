@@ -50,7 +50,7 @@ fun MainScreen(
         Column(modifier = Modifier.padding(innerPadding)) {
             LazyColumn(modifier = Modifier.padding(8.dp)) {
                 items(medicaments) { item ->
-                    Text(text = item.name)
+                    MedItem(item = item)
                 }
             }
         }
