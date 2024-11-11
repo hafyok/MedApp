@@ -33,7 +33,13 @@ import androidx.compose.ui.window.Dialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String) -> Unit, addMedicament: (String) -> Unit) {
+fun AddDialog(
+    value: String,
+    setShowDialog: (Boolean) -> Unit,
+    setValue: (String) -> Unit,
+    addMedicament: (String) -> Unit,
+    setTimePicker: (Boolean) -> Unit
+) {
     val txtFieldError = remember { mutableStateOf("") }
     val txtField = remember { mutableStateOf(value) }
     Dialog(onDismissRequest = { setShowDialog(false) }) {
@@ -77,7 +83,7 @@ fun AddDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String
                             unfocusedIndicatorColor = Color.Transparent
                         ),
 
-                    )
+                        )
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Button(
@@ -95,6 +101,17 @@ fun AddDialog(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String
                             .fillMaxWidth()
                     ) {
                         Text(text = "Done")
+                    }
+
+                    Button(
+                        onClick = {
+                            setTimePicker(true)
+                        },
+                        shape = RoundedCornerShape(50.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(text = "Select time")
                     }
                 }
             }

@@ -14,7 +14,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +29,7 @@ fun MainScreen(
 ) {
     val medicaments by viewModel.medicaments.observeAsState(emptyList())
     val showDialog = remember { mutableStateOf(false) }
+    val showTimePicker = remember { mutableStateOf(false) }
 
     if (showDialog.value) {
         AddDialog(
@@ -38,7 +38,16 @@ fun MainScreen(
             setValue = {},
             addMedicament = { name ->
                 viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f))
-            }
+            },
+            setTimePicker = { showTimePicker.value = it }
+        )
+    }
+
+    if (showTimePicker.value) {
+        DialTime(
+            onConfirm = { /*TODO*/ },
+            onDismiss = { /*TODO*/ },
+            setShowDialog = { showTimePicker.value = it }
         )
     }
 
@@ -51,10 +60,12 @@ fun MainScreen(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            Text(text = "Список преппаратов, которые нужно принять: ",
+            Text(
+                text = "Список преппаратов, которые нужно принять: ",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(8.dp))
+                modifier = Modifier.padding(8.dp)
+            )
             LazyColumn(modifier = Modifier.padding(8.dp)) {
                 items(medicaments) { item ->
                     MedItem(item = item)

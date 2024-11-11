@@ -41,17 +41,28 @@ fun DialTime(
             shape = RoundedCornerShape(16.dp),
             color = Color.Gray
         ) {
-            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth().padding(4.dp)) {
-                Column(verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     TimePicker(
                         state = timePickerState,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()){
-                        Button(onClick = onDismiss) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = { setShowDialog(false) }) {
                             Text(text = "Dismiss picker")
                         }
-                        Button(onClick = onConfirm) {
+                        Button(onClick = {  }) { //TODO()
                             Text(text = "Confirm selection")
                         }
                     }
