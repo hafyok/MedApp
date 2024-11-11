@@ -1,18 +1,22 @@
 package com.example.workmanager.presentation
 
+import android.icu.util.Calendar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workmanager.data.MedicamentEntity
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun MainScreen(
@@ -30,6 +35,8 @@ fun MainScreen(
     val medicaments by viewModel.medicaments.observeAsState(emptyList())
     val showDialog = remember { mutableStateOf(false) }
     val showTimePicker = remember { mutableStateOf(false) }
+    
+    var selectedTime: TimePickerState? by remember { mutableStateOf(null) }
 
     if (showDialog.value) {
         AddDialog(
@@ -45,7 +52,11 @@ fun MainScreen(
 
     if (showTimePicker.value) {
         DialTime(
-            onConfirm = { /*TODO*/ },
+            onConfirm = {
+                time ->
+                selectedTime = time
+                showTimePicker.value = false
+            },
             onDismiss = { /*TODO*/ },
             setShowDialog = { showTimePicker.value = it }
         )
@@ -60,6 +71,15 @@ fun MainScreen(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
+            if(selectedTime != null){
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.HOUR_OF_DAY, selectedTime!!.hour)
+                cal.set(Calendar.MINUTE, selectedTime!!.minute)
+                cal.isLenient = false
+                Text(text = "Selected time = ${cal.time}")
+            }else{
+                Text(text = "No time selected.")
+            }
             Text(
                 text = "Список преппаратов, которые нужно принять: ",
                 fontSize = 20.sp,
