@@ -38,7 +38,8 @@ fun AddDialog(
     setShowDialog: (Boolean) -> Unit,
     setValue: (String) -> Unit,
     addMedicament: (String) -> Unit,
-    setTimePicker: (Boolean) -> Unit
+    setTimePicker: (Boolean) -> Unit,
+    timeText: String
 ) {
     val txtFieldError = remember { mutableStateOf("") }
     val txtField = remember { mutableStateOf(value) }
@@ -84,6 +85,7 @@ fun AddDialog(
                         ),
 
                         )
+                    Text(text = timeText)
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Button(

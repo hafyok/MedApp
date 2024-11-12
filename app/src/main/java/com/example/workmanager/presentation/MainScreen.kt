@@ -35,7 +35,7 @@ fun MainScreen(
     val medicaments by viewModel.medicaments.observeAsState(emptyList())
     val showDialog = remember { mutableStateOf(false) }
     val showTimePicker = remember { mutableStateOf(false) }
-    
+
     var selectedTime: TimePickerState? by remember { mutableStateOf(null) }
 
     if (showDialog.value) {
@@ -46,14 +46,22 @@ fun MainScreen(
             addMedicament = { name ->
                 viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f))
             },
-            setTimePicker = { showTimePicker.value = it }
+            setTimePicker = { showTimePicker.value = it },
+            timeText = if (selectedTime != null) {
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.HOUR_OF_DAY, selectedTime!!.hour)
+                cal.set(Calendar.MINUTE, selectedTime!!.minute)
+                cal.isLenient = false
+                "Выбранное время ${cal.time}"
+            } else {
+                "Время не выбрано"
+            }
         )
     }
 
     if (showTimePicker.value) {
         DialTime(
-            onConfirm = {
-                time ->
+            onConfirm = { time ->
                 selectedTime = time
                 showTimePicker.value = false
             },
@@ -71,15 +79,6 @@ fun MainScreen(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            if(selectedTime != null){
-                val cal = Calendar.getInstance()
-                cal.set(Calendar.HOUR_OF_DAY, selectedTime!!.hour)
-                cal.set(Calendar.MINUTE, selectedTime!!.minute)
-                cal.isLenient = false
-                Text(text = "Selected time = ${cal.time}")
-            }else{
-                Text(text = "No time selected.")
-            }
             Text(
                 text = "Список преппаратов, которые нужно принять: ",
                 fontSize = 20.sp,
