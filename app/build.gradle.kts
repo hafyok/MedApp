@@ -4,6 +4,7 @@ plugins {
     //id("org.jetbrains.kotlin.kapt")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -75,13 +76,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    //val work_version = "2.9.1"
 
     // Kotlin + coroutines
     implementation(libs.androidx.work.runtime.ktx)
 
-    implementation(libs.androidx.room.runtime) // Библиотека "Room"
-    kapt(libs.androidx.room.compiler) // Кодогенератор
+    // Room
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.hilt.android)
@@ -89,4 +90,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.androidx.navigation.compose)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.messaging)
 }
