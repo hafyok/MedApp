@@ -1,5 +1,6 @@
 package com.example.workmanager.presentation
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -14,8 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.workmanager.data.MedicamentEntity
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 fun MedItem(item: MedicamentEntity) {
     Row(
@@ -26,6 +30,7 @@ fun MedItem(item: MedicamentEntity) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = item.name, modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp))
+        Text(text = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(item.time)), modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp))
         Text(text = item.amount.toString(), modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp))
     }
 }
