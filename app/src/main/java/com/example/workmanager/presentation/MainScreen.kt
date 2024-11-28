@@ -1,5 +1,6 @@
 package com.example.workmanager.presentation
 
+import android.annotation.SuppressLint
 import android.icu.util.Calendar
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workmanager.data.MedicamentEntity
+import java.text.SimpleDateFormat
+import java.util.Date
 
+@SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
@@ -62,7 +66,8 @@ fun MainScreen(
             },
             setTimePicker = { showTimePicker.value = it },
             timeText = if (timeInDB != 0L) {
-                "Выбранное время ${timeInDB}"
+                val dateString = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(timeInDB))
+                "Выбранное время: ${dateString}"
             } else {
                 "Время не выбрано"
             }
