@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -29,14 +30,27 @@ import com.example.workmanager.data.MedicamentEntity
 @Preview
 @Composable
 fun MainScreen(
-    viewModel: MedicamentViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: MedicamentViewModel = hiltViewModel()
 ) {
     val medicaments by viewModel.medicaments.observeAsState(emptyList())
     val showDialog = remember { mutableStateOf(false) }
     val showTimePicker = remember { mutableStateOf(false) }
 
     var selectedTime: TimePickerState? by remember { mutableStateOf(null) }
+    val timeInDB by remember {
+        derivedStateOf {
+            if (selectedTime != null) {
+                val cal = Calendar.getInstance()
+                cal.set(Calendar.HOUR_OF_DAY, selectedTime!!.hour)
+                cal.set(Calendar.MINUTE, selectedTime!!.minute)
+                cal.isLenient = false
+                cal.time.time
+            } else {
+                0L
+            }
+        }
+    }
 
     if (showDialog.value) {
         AddDialog(
@@ -44,15 +58,11 @@ fun MainScreen(
             setShowDialog = { showDialog.value = it },
             setValue = {},
             addMedicament = { name ->
-                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f))
+                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB))
             },
             setTimePicker = { showTimePicker.value = it },
-            timeText = if (selectedTime != null) {
-                val cal = Calendar.getInstance()
-                cal.set(Calendar.HOUR_OF_DAY, selectedTime!!.hour)
-                cal.set(Calendar.MINUTE, selectedTime!!.minute)
-                cal.isLenient = false
-                "Выбранное время ${cal.time}"
+            timeText = if (timeInDB != 0L) {
+                "Выбранное время ${timeInDB}"
             } else {
                 "Время не выбрано"
             }

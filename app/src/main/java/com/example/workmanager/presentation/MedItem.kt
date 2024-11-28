@@ -33,5 +33,5 @@ fun MedItem(item: MedicamentEntity) {
 @Composable
 @Preview(showSystemUi = true)
 fun PreviewMedItem(){
-    MedItem(item = MedicamentEntity(0, "DFKDKFD", 4f))
+    MedItem(item = MedicamentEntity(0, "DFKDKFD", 4f, 100000L))
 }

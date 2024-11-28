@@ -8,11 +8,13 @@ import com.example.workmanager.domain.Medicament
 data class MedicamentEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val name: String,
-    val amount: Float
+    val amount: Float,
+    val time: Long
 ){
     fun toMedicament(): Medicament = Medicament(
         id = id,
         name = name,
-        amount = amount
+        amount = amount,
+        time = time
     )
 }
