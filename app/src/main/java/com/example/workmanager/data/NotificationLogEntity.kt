@@ -7,21 +7,24 @@ import androidx.room.PrimaryKey
 @Entity(
     foreignKeys = [
         ForeignKey(
-            entity = MedicamentEntity::class,
+            entity = DoseScheduleEntity::class,
             parentColumns = ["id"],
-            childColumns = ["medicamentId"],
+            childColumns = ["scheduleId"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class DoseScheduleEntity(
+data class NotificationLogEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val medicamentId: Int,
-    val userId: Int,
-    val dosage: Float,
-    val time: Long,
-    val frequency: Int,
-    val endDate: Long
-){
-
+    //val userId: Int,
+    val scheduleId: Int,
+    val sentTime: Long,
+    val status: String
+) {
 }
+
+/*
+enum class LogStatus{
+    SENT, DISMISSED, CONFIRMED
+}*/
