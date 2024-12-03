@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -63,6 +64,19 @@ fun MainScreen(
             setValue = {},
             addMedicament = { name ->
                 viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB))
+                viewModel.insertDoseScheduleInDb(
+                    DoseScheduleEntity(
+                        0,
+                        6,
+                        0.5f,
+                        1210239434L,
+                        2,
+                        1210299434L
+                    )
+                )
+            },
+            addSchedule = {
+
             },
             setTimePicker = { showTimePicker.value = it },
             timeText = if (timeInDB != 0L) {

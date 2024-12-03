@@ -13,4 +13,7 @@ interface MedicamentDao {
 
     @Query("SELECT * FROM medicaments")
     fun getMedicaments(): LiveData<List<MedicamentEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertDoseShedule(value: DoseScheduleEntity)
 }

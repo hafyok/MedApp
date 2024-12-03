@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.workmanager.data.AppDB
+import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,6 +20,10 @@ class MedicamentViewModel @Inject constructor(
 
     fun insertMedicamentInDb(medicamentEntity: MedicamentEntity) = viewModelScope.launch{
         appDB.dao.insertMedicament(medicamentEntity)
+    }
+
+    fun insertDoseScheduleInDb(schedule: DoseScheduleEntity) = viewModelScope.launch {
+        appDB.dao.insertDoseShedule(schedule)
     }
 
     /*fun getMedicamentFromDb() = viewModelScope.launch {

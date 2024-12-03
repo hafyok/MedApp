@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
+    tableName = "NotificationLogs",
     foreignKeys = [
         ForeignKey(
             entity = DoseScheduleEntity::class,

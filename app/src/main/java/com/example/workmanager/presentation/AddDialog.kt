@@ -38,6 +38,7 @@ fun AddDialog(
     setShowDialog: (Boolean) -> Unit,
     setValue: (String) -> Unit,
     addMedicament: (String) -> Unit,
+    addSchedule: (String) -> Unit,
     setTimePicker: (Boolean) -> Unit,
     timeText: String
 ) {
@@ -96,6 +97,7 @@ fun AddDialog(
                             }
                             setValue(txtField.value)
                             addMedicament(txtField.value)
+                            addSchedule("")
                             setShowDialog(false)
                         },
                         shape = RoundedCornerShape(50.dp),
