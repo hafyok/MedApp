@@ -16,4 +16,7 @@ interface MedicamentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDoseShedule(value: DoseScheduleEntity)
+
+    @Query("SELECT id FROM medicaments ORDER BY id DESC LIMIT 1")
+    fun getLastElement(): Int
 }

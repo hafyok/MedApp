@@ -38,13 +38,17 @@ fun AddDialog(
     setShowDialog: (Boolean) -> Unit,
     setValue: (String) -> Unit,
     addMedicament: (String) -> Unit,
-    addSchedule: (String) -> Unit,
+    addSchedule: () -> Unit,
     setTimePicker: (Boolean) -> Unit,
     timeText: String
 ) {
     val txtFieldError = remember { mutableStateOf("") }
     val txtField = remember { mutableStateOf(value) }
-    Dialog(onDismissRequest = { setShowDialog(false) }) {
+
+    Dialog(onDismissRequest = {
+        setShowDialog(false)
+
+    }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
             color = Color.Gray
@@ -97,7 +101,7 @@ fun AddDialog(
                             }
                             setValue(txtField.value)
                             addMedicament(txtField.value)
-                            addSchedule("")
+                            addSchedule()
                             setShowDialog(false)
                         },
                         shape = RoundedCornerShape(50.dp),

@@ -27,6 +27,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -64,19 +67,20 @@ fun MainScreen(
             setValue = {},
             addMedicament = { name ->
                 viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB))
-                viewModel.insertDoseScheduleInDb(
-                    DoseScheduleEntity(
-                        0,
-                        6,
-                        0.5f,
-                        1210239434L,
-                        2,
-                        1210299434L
-                    )
-                )
             },
             addSchedule = {
-
+                CoroutineScope(Dispatchers.IO).launch {
+                    viewModel.insertDoseScheduleInDb(
+                        DoseScheduleEntity(
+                            id = 0,
+                            medicamentId = viewModel.getLastId().await(),
+                            dosage = 0.5f,
+                            time = 1210239434L,
+                            frequency = 2,
+                            endDate = 1210299434L
+                        )
+                    )
+                }
             },
             setTimePicker = { showTimePicker.value = it },
             timeText = if (timeInDB != 0L) {
