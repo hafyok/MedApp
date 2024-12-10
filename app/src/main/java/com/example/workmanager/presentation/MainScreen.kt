@@ -101,24 +101,31 @@ fun MainScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        topBar = {},
         floatingActionButton = {
             FloatingActionButton(onClick = { showDialog.value = true }) {
                 Text(text = "Добавить лекарство", modifier = Modifier.padding(8.dp))
             }
-        }
+        },
+
+
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            Text(
-                text = "Список преппаратов, которые нужно принять: ",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(8.dp)
-            )
-            LazyColumn(modifier = Modifier.padding(8.dp)) {
-                items(medicaments) { item ->
-                    MedItem(item = item)
+        Column {
+            TopCard()
+            Column(modifier = Modifier.padding(innerPadding)) {
+                Text(
+                    text = "Список преппаратов, которые нужно принять: ",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(8.dp)
+                )
+                LazyColumn(modifier = Modifier.padding(8.dp)) {
+                    items(medicaments) { item ->
+                        MedItem(item = item)
+                    }
                 }
             }
         }
+
     }
 }
