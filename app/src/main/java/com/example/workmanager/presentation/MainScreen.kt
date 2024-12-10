@@ -2,6 +2,7 @@ package com.example.workmanager.presentation
 
 import android.annotation.SuppressLint
 import android.icu.util.Calendar
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
+import com.example.workmanager.ui.theme.LightBlueBackground
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -100,17 +102,19 @@ fun MainScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(LightBlueBackground),
         topBar = {},
         floatingActionButton = {
             FloatingActionButton(onClick = { showDialog.value = true }) {
                 Text(text = "Добавить лекарство", modifier = Modifier.padding(8.dp))
             }
         },
+        containerColor = LightBlueBackground
 
 
     ) { innerPadding ->
-        Column {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Возможно лучше перенести TopCard в topBar в Scaffold
             TopCard()
             Column(modifier = Modifier.padding(innerPadding)) {
                 Text(
