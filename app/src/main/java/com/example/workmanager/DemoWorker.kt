@@ -27,7 +27,7 @@ class DemoWorker(appContext: Context, workerParams: WorkerParameters) :
 
     override suspend fun doWork(): Result {
         delay(5000)
-        Log.d("DemoWorker", "do work done!")
+        Log.d("dmwrk", "do work done!")
 
         if (ActivityCompat.checkSelfPermission(
                 applicationContext,

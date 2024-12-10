@@ -3,20 +3,20 @@ package com.example.workmanager
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
 import androidx.work.Constraints
-import androidx.work.ExistingWorkPolicy
+import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.workmanager.presentation.MainScreen
 import com.example.workmanager.ui.theme.WorkManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -24,15 +24,19 @@ class MainActivity : ComponentActivity() {
         .setRequiresCharging(true)
         .build()
 
-    val workRequest = OneTimeWorkRequestBuilder<DemoWorker>()
+    val workRequest = PeriodicWorkRequestBuilder<DemoWorker>(
+        16, TimeUnit.MINUTES,
+        15, TimeUnit.MINUTES
+    )
+        .setInputData(Data.Builder().putBoolean("isStart", true).build())
+        .setInitialDelay(10, TimeUnit.SECONDS)
         .setConstraints(constraints)
-        .addTag("myTask")
+        .addTag("demoTask")
         .build()
 
     val otherWorkRequest = OneTimeWorkRequestBuilder<OtherWorker>()
         .addTag("otherTask")
         .build()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +48,11 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        Log.d("dmwrk", "before work")
         WorkManager.getInstance(this)
-            .enqueueUniqueWork(
+            .enqueueUniquePeriodicWork(
                 "DemoWorker",
-                ExistingWorkPolicy.REPLACE,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 workRequest
             )
         /*WorkManager.getInstance(this)
