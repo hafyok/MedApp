@@ -4,14 +4,17 @@ import android.annotation.SuppressLint
 import android.icu.util.Calendar
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TimePickerState
@@ -22,7 +25,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +39,7 @@ import com.example.workmanager.R
 import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.ui.theme.LightBlueBackground
+import com.example.workmanager.ui.theme.White
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -83,9 +89,6 @@ fun MainScreen(
                     )
                 )
             },
-            addSchedule = {
-
-            },
             setTimePicker = { showTimePicker.value = it },
             timeText = if (timeInDB != 0L) {
                 val dateString = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(timeInDB))
@@ -107,17 +110,36 @@ fun MainScreen(
         )
     }
 
+
     Scaffold(
-        modifier = Modifier.fillMaxSize().background(LightBlueBackground),
+        modifier = Modifier.fillMaxSize(),
         topBar = {},
         floatingActionButton = {
-            FloatingActionButton(onClick = { showDialog.value = true }) {
-                Text(text = "Добавить лекарство", modifier = Modifier.padding(8.dp))
+            FloatingActionButton(
+                onClick = { showDialog.value = true },
+                containerColor = White,
+                elevation = FloatingActionButtonDefaults.elevation(0.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(0.2f)
+                        .padding(8.dp), verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_add_24),
+                        contentDescription = "plus"
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        contentDescription = "tablet"
+                    )
+                }
+
+
+                //Text(text = "Добавить лекарство", modifier = Modifier.padding(8.dp))
             }
         },
         containerColor = LightBlueBackground
-
-
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -131,7 +153,7 @@ fun MainScreen(
                     text = "Расписание приёма лекарств: ",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp),
                     fontFamily = sansFamily
                 )
                 LazyColumn(modifier = Modifier.padding(8.dp)) {
