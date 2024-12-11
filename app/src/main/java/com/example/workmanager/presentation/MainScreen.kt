@@ -2,6 +2,8 @@ package com.example.workmanager.presentation
 
 import android.annotation.SuppressLint
 import android.icu.util.Calendar
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,17 +23,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.workmanager.R
 import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.ui.theme.LightBlueBackground
 import java.text.SimpleDateFormat
 import java.util.Date
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -114,14 +120,19 @@ fun MainScreen(
 
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize()) {
+
+            val sansFamily = FontFamily(
+                Font(R.font.productsans, FontWeight.Normal)
+            )
             // Возможно лучше перенести TopCard в topBar в Scaffold
             TopCard()
             Column(modifier = Modifier.padding(innerPadding)) {
                 Text(
-                    text = "Список преппаратов, которые нужно принять: ",
+                    text = "Расписание приёма лекарств: ",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp)
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(8.dp),
+                    fontFamily = sansFamily
                 )
                 LazyColumn(modifier = Modifier.padding(8.dp)) {
                     items(medicaments) { item ->
