@@ -18,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -30,7 +29,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.workmanager.myUiKit.LargeText
+import com.example.workmanager.myUiKit.NormalText
 
+// TODO() Допилить UI ВСЕГО диалога
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddDialog(
@@ -54,7 +56,7 @@ fun AddDialog(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(text = "Добавить лекарство")
+                        LargeText(text = "Добавить лекарство")
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = "",
@@ -85,7 +87,7 @@ fun AddDialog(
                         ),
 
                         )
-                    Text(text = timeText)
+                    NormalText(text = timeText)
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Button(
@@ -102,7 +104,7 @@ fun AddDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Text(text = "Done")
+                        NormalText(text = "Done")
                     }
 
                     Button(
@@ -113,7 +115,7 @@ fun AddDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Text(text = "Select time")
+                        NormalText(text = "Select time")
                     }
                 }
             }
