@@ -1,5 +1,6 @@
 package com.example.workmanager.presentation
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,7 +21,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,8 +34,74 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.workmanager.data.DoseScheduleEntity
+import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.myUiKit.LargeText
 import com.example.workmanager.myUiKit.NormalText
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+
+@SuppressLint("SimpleDateFormat")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddMedicamentDialog(
+    viewModel: MedicamentViewModel = hiltViewModel(),
+    showDialogState: MutableState<Boolean>,
+    onDismiss: () -> Unit
+) {
+    val showDialog = showDialogState
+    val showTimePicker = remember { mutableStateOf(false) }
+    val selectedTime: TimePickerState? by remember{ mutableStateOf(null) }
+
+    val timeInDB by remember {
+        derivedStateOf{
+            selectedTime?.let {
+                Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, it.hour)
+                    set(Calendar.MINUTE, it.minute)
+                }.time.time
+            } ?: 0L
+        }
+    }
+
+    if (showDialog.value){
+        AddDialog(
+            value = "",
+            setShowDialog = { showDialog.value = it },
+            setValue = {},
+            addMedicament = { name ->
+                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB))
+            },
+            addSchedule = {
+                CoroutineScope(Dispatchers.IO).launch {
+                    viewModel.insertDoseScheduleInDb(
+                        DoseScheduleEntity(
+                            id = 0,
+                            medicamentId = viewModel.getLastId().await(),
+                            dosage = 0.5f,
+                            time = 1210239434L,
+                            frequency = 2,
+                            endDate = 1210299434L
+                        )
+                    )
+                }
+            },
+            setTimePicker = { showTimePicker.value = it },
+            timeText = if (timeInDB != 0L) {
+                val dateString = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(timeInDB))
+                "Выбранное время: ${dateString}"
+            } else {
+                "Время не выбрано"
+            }
+        )
+    }
+
+}
 
 // TODO() Допилить UI ВСЕГО диалога
 @OptIn(ExperimentalMaterial3Api::class)

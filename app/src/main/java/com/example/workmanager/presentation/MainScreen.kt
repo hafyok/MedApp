@@ -1,7 +1,6 @@
 package com.example.workmanager.presentation
 
 import android.annotation.SuppressLint
-import android.icu.util.Calendar
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -19,7 +18,6 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -32,16 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workmanager.R
-import com.example.workmanager.data.DoseScheduleEntity
-import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.myUiKit.LargeText
 import com.example.workmanager.ui.theme.LightBlueBackground
 import com.example.workmanager.ui.theme.White
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("SimpleDateFormat")
@@ -57,51 +48,6 @@ fun MainScreen(
     val showTimePicker = remember { mutableStateOf(false) }
 
     var selectedTime: TimePickerState? by remember { mutableStateOf(null) }
-    val timeInDB by remember {
-        derivedStateOf {
-            if (selectedTime != null) {
-                val cal = Calendar.getInstance()
-                cal.set(Calendar.HOUR_OF_DAY, selectedTime!!.hour)
-                cal.set(Calendar.MINUTE, selectedTime!!.minute)
-                cal.isLenient = false
-                cal.time.time
-            } else {
-                0L
-            }
-        }
-    }
-
-    if (showDialog.value) {
-        AddDialog(
-            value = "",
-            setShowDialog = { showDialog.value = it },
-            setValue = {},
-            addMedicament = { name ->
-                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB))
-            },
-            addSchedule = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    viewModel.insertDoseScheduleInDb(
-                        DoseScheduleEntity(
-                            id = 0,
-                            medicamentId = viewModel.getLastId().await(),
-                            dosage = 0.5f,
-                            time = 1210239434L,
-                            frequency = 2,
-                            endDate = 1210299434L
-                        )
-                    )
-                }
-            },
-            setTimePicker = { showTimePicker.value = it },
-            timeText = if (timeInDB != 0L) {
-                val dateString = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(timeInDB))
-                "Выбранное время: ${dateString}"
-            } else {
-                "Время не выбрано"
-            }
-        )
-    }
 
     if (showTimePicker.value) {
         DialTime(
@@ -113,6 +59,8 @@ fun MainScreen(
             setShowDialog = { showTimePicker.value = it }
         )
     }
+
+    AddMedicamentDialog(showDialogState = showDialog, onDismiss = {})
 
 
     Scaffold(
