@@ -56,7 +56,15 @@ fun MedItem(item: MedicamentEntity) {
                             .fillMaxWidth()
                             .padding(end = 8.dp), horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        NormalText(text = SimpleDateFormat("HH:mm").format(Date(item.time)))
+                        Row {
+                            Image(
+                                modifier = Modifier.padding(top = 3.dp, end = 3.dp),
+                                alignment = Alignment.Center,
+                                painter = painterResource(id = R.drawable.ic_time),
+                                contentDescription = "time"
+                            )
+                            NormalText(text = SimpleDateFormat("HH:mm").format(Date(item.time)))
+                        }
                         NormalText(text = item.amount.toString(), modifier = Modifier.padding(horizontal = 8.dp))
                     }
 
@@ -76,5 +84,5 @@ fun MedItem(item: MedicamentEntity) {
 @Composable
 @Preview(showSystemUi = true)
 fun PreviewMedItem() {
-    MedItem(item = MedicamentEntity(0, "DFKDKFD", 4f, 100000L))
+    MedItem(item = MedicamentEntity(0, "НурофенAd", 4f, 100000L))
 }

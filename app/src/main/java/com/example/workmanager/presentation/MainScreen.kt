@@ -17,7 +17,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -29,16 +28,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workmanager.R
 import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
+import com.example.workmanager.myUiKit.LargeText
 import com.example.workmanager.ui.theme.LightBlueBackground
 import com.example.workmanager.ui.theme.White
 import java.text.SimpleDateFormat
@@ -135,28 +131,16 @@ fun MainScreen(
                         contentDescription = "tablet"
                     )
                 }
-
-
-                //Text(text = "Добавить лекарство", modifier = Modifier.padding(8.dp))
             }
         },
         containerColor = LightBlueBackground
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize()) {
-
-            val sansFamily = FontFamily(
-                Font(R.font.productsans, FontWeight.Normal)
-            )
             // Возможно лучше перенести TopCard в topBar в Scaffold
             TopCard()
             Column(modifier = Modifier.padding(innerPadding)) {
-                Text(
-                    text = "Расписание приёма лекарств: ",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    fontFamily = sansFamily
-                )
+                LargeText(text = "Расписание приёма лекарств: ", modifier = Modifier.padding(horizontal = 16.dp))
+
                 LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.padding(8.dp)) {
                     items(medicaments) { item ->
                         MedItem(item = item)

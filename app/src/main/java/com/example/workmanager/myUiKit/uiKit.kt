@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.workmanager.R
 import com.example.workmanager.ui.theme.Black
 import com.example.workmanager.ui.theme.White
@@ -30,10 +31,22 @@ fun NormalText(text: String, modifier: Modifier = Modifier) {
     )
 }
 
+@Composable
+fun LargeText(text: String, modifier: Modifier = Modifier.padding(horizontal = 8.dp)) {
+    Text(
+        text = text,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Medium,
+        modifier = modifier,
+        fontFamily = sansFamily
+    )
+}
+
 @Preview
 @Composable
 fun NormalButton(
-    text: String = "Button", onClick: () -> Unit = {}, modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    text: String = "Button", onClick: () -> Unit = {},
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
