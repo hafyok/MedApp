@@ -12,17 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -36,7 +33,6 @@ import com.example.workmanager.ui.theme.White
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("SimpleDateFormat")
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun MainScreen(
@@ -45,22 +41,8 @@ fun MainScreen(
 ) {
     val medicaments by viewModel.medicaments.observeAsState(emptyList())
     val showDialog = remember { mutableStateOf(false) }
-    val showTimePicker = remember { mutableStateOf(false) }
 
-    var selectedTime: TimePickerState? by remember { mutableStateOf(null) }
-
-    if (showTimePicker.value) {
-        DialTime(
-            onConfirm = { time ->
-                selectedTime = time
-                showTimePicker.value = false
-            },
-            onDismiss = { /*TODO*/ },
-            setShowDialog = { showTimePicker.value = it }
-        )
-    }
-
-    AddMedicamentDialog(showDialogState = showDialog, onDismiss = {})
+    AddMedicamentDialog(showDialogState = showDialog)
 
 
     Scaffold(

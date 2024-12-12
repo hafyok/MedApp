@@ -26,7 +26,6 @@ import java.util.Calendar
 @Composable
 fun DialTime(
     onConfirm: (TimePickerState) -> Unit,
-    onDismiss: () -> Unit,
     setShowDialog: (Boolean) -> Unit
 ) {
     val currentTime = Calendar.getInstance()

@@ -27,7 +27,7 @@ fun TopCard() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.5f),
+            .fillMaxHeight(0.45f),
         shape = RoundedCornerShape(bottomStart = 33.dp, bottomEnd = 33.dp)
     ) {
         Box(

@@ -28,6 +28,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,11 +53,10 @@ import java.util.Date
 fun AddMedicamentDialog(
     viewModel: MedicamentViewModel = hiltViewModel(),
     showDialogState: MutableState<Boolean>,
-    onDismiss: () -> Unit
 ) {
     val showDialog = showDialogState
     val showTimePicker = remember { mutableStateOf(false) }
-    val selectedTime: TimePickerState? by remember{ mutableStateOf(null) }
+    var selectedTime: TimePickerState? by remember { mutableStateOf(null) }
 
     val timeInDB by remember {
         derivedStateOf{
@@ -100,6 +100,17 @@ fun AddMedicamentDialog(
             }
         )
     }
+
+    if (showTimePicker.value) {
+        DialTime(
+            onConfirm = { time ->
+                selectedTime = time
+                showTimePicker.value = false
+            },
+            setShowDialog = { showTimePicker.value = it }
+        )
+    }
+
 
 }
 
