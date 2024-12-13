@@ -3,8 +3,10 @@ package com.example.workmanager
 import android.app.Application
 import androidx.room.Room
 import com.example.workmanager.data.AppDB
-import com.example.workmanager.data.MedicamentRepository
-import com.example.workmanager.domain.MedicamentRepositoryImpl
+import com.example.workmanager.data.DoseScheduleRepositoryImpl
+import com.example.workmanager.domain.MedicamentRepository
+import com.example.workmanager.data.MedicamentRepositoryImpl
+import com.example.workmanager.domain.DoseScheduleRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,8 +32,15 @@ object Dependencies {
     @Provides
     fun provideMedicamentRepository(
         appDB: AppDB
-    ): MedicamentRepository{
+    ): MedicamentRepository {
         return MedicamentRepositoryImpl(appDB)
+    }
+
+    @Provides
+    fun provideDoseScheduleRepository(
+        appDB: AppDB
+    ): DoseScheduleRepository{
+        return DoseScheduleRepositoryImpl(appDB)
     }
 
 }
