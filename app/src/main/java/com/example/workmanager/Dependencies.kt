@@ -1,9 +1,10 @@
 package com.example.workmanager
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import com.example.workmanager.data.AppDB
+import com.example.workmanager.data.MedicamentRepository
+import com.example.workmanager.domain.MedicamentRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +25,13 @@ object Dependencies {
         )
             .allowMainThreadQueries() // TODO() мб опасно
             .build()
+    }
+
+    @Provides
+    fun provideMedicamentRepository(
+        appDB: AppDB
+    ): MedicamentRepository{
+        return MedicamentRepositoryImpl(appDB)
     }
 
 }
