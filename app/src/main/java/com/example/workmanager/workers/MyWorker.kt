@@ -1,4 +1,4 @@
-package com.example.workmanager
+package com.example.workmanager.workers
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ServiceInfo
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -17,6 +16,8 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import com.example.workmanager.MainActivity
+import com.example.workmanager.R
 import kotlinx.coroutines.delay
 import kotlin.properties.Delegates
 

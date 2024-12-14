@@ -1,4 +1,4 @@
-package com.example.workmanager
+package com.example.workmanager.workers
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -19,6 +19,8 @@ import androidx.work.WorkerParameters
 import kotlinx.coroutines.delay
 import kotlin.properties.Delegates
 import android.Manifest
+import com.example.workmanager.MainActivity
+import com.example.workmanager.R
 
 class DemoWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {

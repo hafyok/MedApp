@@ -1,31 +1,27 @@
 package com.example.workmanager
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.work.Constraints
-import androidx.work.Data
-import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.workmanager.presentation.MainScreen
 import com.example.workmanager.ui.theme.WorkManagerTheme
+import com.example.workmanager.workers.RescheduleAlarmWorker
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     val constraints = Constraints.Builder()
         .build()
 
-    val workRequest = PeriodicWorkRequestBuilder<DemoWorker>(
+    /*val workRequest = PeriodicWorkRequestBuilder<DemoWorker>(
         16, TimeUnit.MINUTES,
         15, TimeUnit.MINUTES
     )
@@ -33,7 +29,7 @@ class MainActivity : ComponentActivity() {
         .setInitialDelay(1, TimeUnit.SECONDS)
         .setConstraints(constraints)
         .addTag("demoTask")
-        .build()
+        .build()*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +40,19 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        Log.d("dmwrk", "before work")
+        val workRequest = OneTimeWorkRequestBuilder<RescheduleAlarmWorker>().build()
+        WorkManager.getInstance(this)
+            .enqueueUniqueWork("AlarmWorker", ExistingWorkPolicy.REPLACE, workRequest)
+
+        WorkManager.getInstance(applicationContext)
+            .getWorkInfosForUniqueWorkLiveData("AlarmWorker")
+            .observe(this) { workInfos ->
+                workInfos?.forEach { workInfo ->
+                    Log.d("alrmwrk", "Task state: ${workInfo.state}")
+                }
+            }
+
+        /*Log.d("dmwrk", "before work")
         WorkManager.getInstance(this)
             .enqueueUniquePeriodicWork(
                 "DemoWorker",
@@ -59,10 +67,7 @@ class MainActivity : ComponentActivity() {
                     Log.d("dmwrk", "Task state: ${workInfo.state}")
                 }
             }
-        /*WorkManager.getInstance(this)
-            .beginWith(workRequest)
-            .then(otherWorkRequest)
-            .enqueue()*/
+        */
         enableEdgeToEdge()
         setContent {
             WorkManagerTheme {
