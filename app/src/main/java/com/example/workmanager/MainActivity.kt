@@ -1,6 +1,7 @@
 package com.example.workmanager
 
 import android.content.pm.PackageManager
+import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.work.Constraints
+import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -18,9 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    val constraints = Constraints.Builder()
-        .build()
-
     /*val workRequest = PeriodicWorkRequestBuilder<DemoWorker>(
         16, TimeUnit.MINUTES,
         15, TimeUnit.MINUTES
@@ -40,7 +39,25 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        val workRequest = OneTimeWorkRequestBuilder<RescheduleAlarmWorker>().build()
+
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, 2024)
+            set(Calendar.MONTH, 11)
+            set(Calendar.DAY_OF_MONTH, 15)
+            set(Calendar.HOUR_OF_DAY, 11)
+            set(Calendar.MINUTE, 33)
+
+            if (timeInMillis < System.currentTimeMillis()) add (Calendar.DAY_OF_MONTH, 1)
+        }
+
+        val inputData = Data.Builder()
+            .putLong("TIME_IN_MILLIS", calendar.timeInMillis)
+            .build()
+
+        val workRequest = OneTimeWorkRequestBuilder<RescheduleAlarmWorker>()
+            .setInputData(inputData)
+            .build()
+
         WorkManager.getInstance(this)
             .enqueueUniqueWork("AlarmWorker", ExistingWorkPolicy.REPLACE, workRequest)
 
