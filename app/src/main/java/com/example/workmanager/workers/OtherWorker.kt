@@ -1,14 +1,13 @@
-package com.example.workmanager
+package com.example.workmanager.workers
 
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import kotlinx.coroutines.delay
 
-class MyWorker(appContext: Context, workerParams: WorkerParameters) :
+class OtherWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
     companion object {
@@ -18,14 +17,14 @@ class MyWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     override suspend fun doWork(): Result {
-        Log.d(TAG, "doWork: start")
+        Log.d(TAG, "doOtherWork: start")
         val firstUpdate = workDataOf(Progress to 0)
         val lastUpdate = workDataOf(Progress to 100)
         setProgress(firstUpdate)
         delay(delayDuration)
         setProgress(lastUpdate)
 
-        Log.d(TAG, "doWork: end")
+        Log.d(TAG, "doOtherWork: end")
         return Result.success()
     }
 
