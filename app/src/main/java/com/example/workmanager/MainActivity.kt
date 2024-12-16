@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -40,6 +39,7 @@ class MainActivity : ComponentActivity() {
         }
 
 
+        /* Тестовые уведомления
         val calendar = Calendar.getInstance().apply {
             set(Calendar.YEAR, 2024)
             set(Calendar.MONTH, 11)
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
             set(Calendar.HOUR_OF_DAY, 11)
             set(Calendar.MINUTE, 33)
 
-            if (timeInMillis < System.currentTimeMillis()) add (Calendar.DAY_OF_MONTH, 1)
+            if (timeInMillis < System.currentTimeMillis()) add(Calendar.DAY_OF_MONTH, 1)
         }
 
         val inputData = Data.Builder()
@@ -66,22 +66,6 @@ class MainActivity : ComponentActivity() {
             .observe(this) { workInfos ->
                 workInfos?.forEach { workInfo ->
                     Log.d("alrmwrk", "Task state: ${workInfo.state}")
-                }
-            }
-
-        /*Log.d("dmwrk", "before work")
-        WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork(
-                "DemoWorker",
-                ExistingPeriodicWorkPolicy.UPDATE,
-                workRequest
-            )
-
-        WorkManager.getInstance(applicationContext)
-            .getWorkInfosForUniqueWorkLiveData("DemoWorker")
-            .observe(this) { workInfos ->
-                workInfos?.forEach { workInfo ->
-                    Log.d("dmwrk", "Task state: ${workInfo.state}")
                 }
             }
         */
