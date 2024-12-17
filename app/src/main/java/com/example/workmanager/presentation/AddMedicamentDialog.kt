@@ -89,6 +89,8 @@ fun AddMedicamentDialog(
                             endDate = 1210299434L
                         )
                     )
+
+                    viewModel.scheduleNotification(timeInDB)
                 }
             },
             setTimePicker = { showTimePicker.value = it },

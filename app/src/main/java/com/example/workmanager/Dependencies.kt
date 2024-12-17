@@ -2,6 +2,7 @@ package com.example.workmanager
 
 import android.app.Application
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.example.workmanager.data.AppDB
 import com.example.workmanager.data.DoseScheduleRepositoryImpl
 import com.example.workmanager.domain.MedicamentRepository
@@ -41,6 +42,13 @@ object Dependencies {
         appDB: AppDB
     ): DoseScheduleRepository{
         return DoseScheduleRepositoryImpl(appDB)
+    }
+
+    @Provides
+    fun provideRescheduleWorkManager(
+        application: Application
+    ): WorkManager{
+        return WorkManager.getInstance(application.applicationContext)
     }
 
 }

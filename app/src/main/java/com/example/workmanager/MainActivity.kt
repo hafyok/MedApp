@@ -1,20 +1,14 @@
 package com.example.workmanager
 
 import android.content.pm.PackageManager
-import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.annotation.RequiresApi
 import com.example.workmanager.presentation.MainScreen
 import com.example.workmanager.ui.theme.WorkManagerTheme
-import com.example.workmanager.workers.RescheduleAlarmWorker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +23,7 @@ class MainActivity : ComponentActivity() {
         .addTag("demoTask")
         .build()*/
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +34,7 @@ class MainActivity : ComponentActivity() {
         }
 
 
-        /* Тестовые уведомления
+        /*//Тестовые уведомления
         val calendar = Calendar.getInstance().apply {
             set(Calendar.YEAR, 2024)
             set(Calendar.MONTH, 11)
@@ -67,8 +62,7 @@ class MainActivity : ComponentActivity() {
                 workInfos?.forEach { workInfo ->
                     Log.d("alrmwrk", "Task state: ${workInfo.state}")
                 }
-            }
-        */
+            }*/
         enableEdgeToEdge()
         setContent {
             WorkManagerTheme {
@@ -76,5 +70,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }
