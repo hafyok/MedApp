@@ -44,6 +44,7 @@ import com.example.workmanager.myUiKit.MediumButton
 import com.example.workmanager.myUiKit.NormalText
 import com.example.workmanager.myUiKit.ProjectOutlinedTextField
 import com.example.workmanager.myUiKit.sansFamily
+import com.example.workmanager.ui.theme.BackgroundPurple
 import com.example.workmanager.ui.theme.Black
 import com.example.workmanager.ui.theme.MainPurple
 import com.example.workmanager.ui.theme.White
@@ -133,15 +134,16 @@ fun AddDialog(
     addMedicament: (String) -> Unit,
     addSchedule: () -> Unit,
     setTimePicker: (Boolean) -> Unit,
-    timeText: String
+    timeText: String,
+    dialogColor: Color = BackgroundPurple // По умолчанию серый
 ) {
     val txtFieldError = remember { mutableStateOf("") }
     val txtField = remember { mutableStateOf(value) }
     Dialog(onDismissRequest = { setShowDialog(false) }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
-            color = Color.Gray
-        ) {
+            color = dialogColor // Используем цвет из параметра
+        )  {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
