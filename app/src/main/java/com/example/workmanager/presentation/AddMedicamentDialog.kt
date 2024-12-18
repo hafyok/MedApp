@@ -139,9 +139,10 @@ fun AddDialog(
     timeText: String,
     dialogColor: Color = BackgroundPurple // По умолчанию серый
 ) {
-    val txtFieldError = remember { mutableStateOf("") }
     val txtField = remember { mutableStateOf(value) }
     val txtDose = remember { mutableStateOf("") }
+    val isDone by remember { derivedStateOf { txtField.value.isNotEmpty() && txtDose.value.isNotEmpty() } }
+
     Dialog(onDismissRequest = { setShowDialog(false) }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
@@ -236,35 +237,33 @@ fun AddDialog(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     // Кнопка "Готово"
-                    Card(
-                        shape = RoundedCornerShape(14.dp),
-                        modifier = Modifier.clickable {
-                            if (txtField.value.isEmpty()) {
-                                txtFieldError.value = "Поле не может быть пустым"
-                                return@clickable
-                            }
-                            setValue(txtField.value)
-                            addMedicament(txtField.value)
-                            addSchedule()
-                            setShowDialog(false)
-                        },
-                        colors = CardColors(
-                            containerColor = MainPurple,
-                            contentColor = Black,
-                            disabledContentColor = Black,
-                            disabledContainerColor = Black
-                        )
-                    ) {
-                        Text(
-                            text = "Готово",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp, vertical = 10.dp)
-                                .fillMaxWidth(),
-                            fontFamily = sansFamily,
-                            textAlign = TextAlign.Center
-                        )
+                    if (isDone) {
+                        Card(
+                            shape = RoundedCornerShape(14.dp),
+                            modifier = Modifier.clickable {
+                                setValue(txtField.value)
+                                addMedicament(txtField.value)
+                                addSchedule()
+                                setShowDialog(false)
+                            },
+                            colors = CardColors(
+                                containerColor = MainPurple,
+                                contentColor = Black,
+                                disabledContentColor = Black,
+                                disabledContainerColor = Black
+                            )
+                        ) {
+                            Text(
+                                text = "Готово",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp, vertical = 10.dp)
+                                    .fillMaxWidth(),
+                                fontFamily = sansFamily,
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     }
 
                 }
