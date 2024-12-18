@@ -15,10 +15,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TimePickerState
@@ -33,13 +35,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.workmanager.data.DoseScheduleEntity
 import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.myUiKit.LargeText
+import com.example.workmanager.myUiKit.MediumButton
 import com.example.workmanager.myUiKit.NormalText
+import com.example.workmanager.myUiKit.sansFamily
+import com.example.workmanager.ui.theme.Black
+import com.example.workmanager.ui.theme.MainPurple
+import com.example.workmanager.ui.theme.White
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -59,7 +70,7 @@ fun AddMedicamentDialog(
     var selectedTime: TimePickerState? by remember { mutableStateOf(null) }
 
     val timeInDB by remember {
-        derivedStateOf{
+        derivedStateOf {
             selectedTime?.let {
                 Calendar.getInstance().apply {
                     set(Calendar.HOUR_OF_DAY, it.hour)
@@ -69,7 +80,7 @@ fun AddMedicamentDialog(
         }
     }
 
-    if (showDialog.value){
+    if (showDialog.value) {
         AddDialog(
             value = "",
             setShowDialog = { showDialog.value = it },
@@ -175,37 +186,97 @@ fun AddDialog(
                     NormalText(text = timeText)
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Button(
-                        onClick = {
+
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+
+                        // TODO() Перенести в strings
+                        MediumButton(
+                            text = "Без напоминаний",
+                            onClick = { setTimePicker(true) },
+                            colors = CardColors(
+                                containerColor = White,
+                                contentColor = Black,
+                                disabledContentColor = Black,
+                                disabledContainerColor = Black
+                            )
+                        )
+
+
+                        // TODO() Перенести в strings
+                        MediumButton(
+                            text = "Выбрать время",
+                            onClick = { setTimePicker(true) },
+                            colors = CardColors(
+                                containerColor = MainPurple,
+                                contentColor = Black,
+                                disabledContentColor = Black,
+                                disabledContainerColor = Black
+                            )
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Card(
+                        shape = RoundedCornerShape(14.dp),
+                        modifier = Modifier.clickable {
                             if (txtField.value.isEmpty()) {
                                 txtFieldError.value = "Field can not be empty"
-                                return@Button
+                                return@clickable
                             }
                             setValue(txtField.value)
                             addMedicament(txtField.value)
                             addSchedule()
                             setShowDialog(false)
                         },
-                        shape = RoundedCornerShape(50.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        colors = CardColors(
+                            containerColor = MainPurple,
+                            contentColor = Black,
+                            disabledContentColor = Black,
+                            disabledContainerColor = Black
+                        )
                     ) {
-                        NormalText(text = "Done")
+                        Text(
+                            text = "Готово",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp, vertical = 10.dp)
+                                .fillMaxWidth(),
+                            fontFamily = sansFamily,
+                            textAlign = TextAlign.Center
+                        )
                     }
 
-                    Button(
-                        onClick = {
-                            setTimePicker(true)
-                        },
-                        shape = RoundedCornerShape(50.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        NormalText(text = "Select time")
-                    }
                 }
             }
 
         }
     }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun PreviewAddDialog() {
+    val timeInDB = 78L
+    AddDialog(
+        value = "",
+        setShowDialog = { },
+        setValue = {},
+        addMedicament = {
+        },
+        addSchedule = {
+
+        },
+        setTimePicker = { },
+        timeText = if (timeInDB != 0L) {
+            val dateString = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(timeInDB))
+            "Выбранное время: ${dateString}"
+        } else {
+            "Время не выбрано"
+        }
+    )
 }

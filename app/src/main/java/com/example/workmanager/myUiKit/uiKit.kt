@@ -1,5 +1,7 @@
 package com.example.workmanager.myUiKit
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -10,11 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.workmanager.R
 import com.example.workmanager.ui.theme.Black
+import com.example.workmanager.ui.theme.MainPurple
 import com.example.workmanager.ui.theme.White
 
 val sansFamily = FontFamily(
@@ -32,25 +36,26 @@ fun NormalText(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LargeText(text: String, modifier: Modifier = Modifier.padding(horizontal = 8.dp)) {
+fun LargeText(text: String, modifier: Modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth()) {
     Text(
         text = text,
         fontSize = 20.sp,
         fontWeight = FontWeight.Medium,
         modifier = modifier,
-        fontFamily = sansFamily
+        fontFamily = sansFamily,
+        textAlign = TextAlign.Center
     )
 }
 
 @Preview
 @Composable
-fun NormalButton(
+fun ShortButton(
     modifier: Modifier = Modifier,
     text: String = "Button", onClick: () -> Unit = {},
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier,
+        modifier = modifier.clickable { onClick() },
         colors = CardColors(
             containerColor = White,
             contentColor = Black,
@@ -59,6 +64,36 @@ fun NormalButton(
         )
     ) {
         NormalText(text = text, modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp))
+    }
+}
+
+@Preview
+@Composable
+fun MediumButton(
+    modifier: Modifier = Modifier,
+    text: String = "Button",
+    onClick: () -> Unit = {},
+    colors: CardColors = CardColors(
+        containerColor = MainPurple,
+        contentColor = Black,
+        disabledContentColor = Black,
+        disabledContainerColor = Black
+    )
+) {
+    Card(
+        shape = RoundedCornerShape(14.dp),
+        modifier = modifier.clickable { onClick() },
+        colors = colors
+    ) {
+        NormalText(text = text, modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp))
+        /*Text(
+            text = text,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = modifier.padding(horizontal = 8.dp, vertical = 10.dp).fillMaxWidth(),
+            fontFamily = sansFamily,
+            textAlign = TextAlign.Center
+        )*/
     }
 }
 

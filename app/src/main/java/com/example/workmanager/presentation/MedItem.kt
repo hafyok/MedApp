@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.workmanager.R
 import com.example.workmanager.data.MedicamentEntity
-import com.example.workmanager.myUiKit.NormalButton
+import com.example.workmanager.myUiKit.ShortButton
 import com.example.workmanager.myUiKit.NormalText
 import com.example.workmanager.ui.theme.Black
 import com.example.workmanager.ui.theme.LightPurple
@@ -71,7 +71,7 @@ fun MedItem(item: MedicamentEntity) {
                 }
             }
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            NormalButton(
+            ShortButton(
                 text = "Редактировать",
                 onClick = { TODO() },
                 modifier = Modifier.padding(8.dp)

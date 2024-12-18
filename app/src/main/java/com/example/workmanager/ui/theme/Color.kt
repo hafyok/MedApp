@@ -17,3 +17,6 @@ val LightPurple = Color(0x4DE0B6FF)
 
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
+
+val MainPurple = Color(0xFFE0B6FF)
+val BackgroundPurple = Color(0xFFF6EDFF)
