@@ -1,11 +1,11 @@
 package com.example.workmanager.myUiKit
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
@@ -16,9 +16,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,15 +48,15 @@ fun NormalText(text: String, modifier: Modifier = Modifier) {
 fun LargeText(
     text: String, modifier: Modifier = Modifier
         .padding(horizontal = 8.dp)
-        .fillMaxWidth()
+        //.fillMaxWidth()
 ) {
     Text(
         text = text,
-        fontSize = 20.sp,
+        fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
         modifier = modifier,
         fontFamily = sansFamily,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Start
     )
 }
 
@@ -97,14 +99,6 @@ fun MediumButton(
         colors = colors
     ) {
         NormalText(text = text, modifier = Modifier.padding(horizontal = 8.dp, vertical = 10.dp))
-        /*Text(
-            text = text,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Medium,
-            modifier = modifier.padding(horizontal = 8.dp, vertical = 10.dp).fillMaxWidth(),
-            fontFamily = sansFamily,
-            textAlign = TextAlign.Center
-        )*/
     }
 }
 
@@ -112,21 +106,19 @@ fun MediumButton(
 @Preview(showSystemUi = true)
 fun ProjectOutlinedTextField(
     textState: MutableState<String> = mutableStateOf(""),
-    placeholder: String = "Тест"
+    placeholder: String = "Тест",
+    leadingIcon: ImageVector = Icons.Filled.Add,
+    description: String? = null,
+    modifier: Modifier = Modifier.padding(vertical = 8.dp),
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
 ) {
     OutlinedTextField(
+        modifier = modifier,
         value = textState.value,
         onValueChange = { textState.value = it },
-        leadingIcon = { Icon(Icons.Filled.AddCircle, "Иконка таблетки") },
-        label = { NormalText(text = placeholder, modifier = Modifier.alpha(0.5f))})
-}
-/*
-@Preview
-@Composable
-fun NormalButton(text: String = "Button", onClick: () -> Unit = {}, @SuppressLint("ModifierParameter") modifier: Modifier = Modifier){
-    Button(onClick = { onClick()}, modifier = Modifier, contentPadding = PaddingValues(horizontal = 0.dp)) {
-        NormalText(text = text)
-    }
+        leadingIcon = { Icon(leadingIcon, description) },
+        label = { NormalText(text = placeholder, modifier = Modifier.alpha(0.5f)) },
+        keyboardOptions = keyboardOptions
+    )
 }
 
-*/
