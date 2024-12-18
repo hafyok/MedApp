@@ -4,11 +4,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -36,7 +43,11 @@ fun NormalText(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LargeText(text: String, modifier: Modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth()) {
+fun LargeText(
+    text: String, modifier: Modifier = Modifier
+        .padding(horizontal = 8.dp)
+        .fillMaxWidth()
+) {
     Text(
         text = text,
         fontSize = 20.sp,
@@ -97,6 +108,18 @@ fun MediumButton(
     }
 }
 
+@Composable
+@Preview(showSystemUi = true)
+fun ProjectOutlinedTextField(
+    textState: MutableState<String> = mutableStateOf(""),
+    placeholder: String = "Тест"
+) {
+    OutlinedTextField(
+        value = textState.value,
+        onValueChange = { textState.value = it },
+        leadingIcon = { Icon(Icons.Filled.AddCircle, "Иконка таблетки") },
+        label = { NormalText(text = placeholder, modifier = Modifier.alpha(0.5f))})
+}
 /*
 @Preview
 @Composable

@@ -1,8 +1,6 @@
 package com.example.workmanager.presentation
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,8 +19,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -34,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,6 +42,7 @@ import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.myUiKit.LargeText
 import com.example.workmanager.myUiKit.MediumButton
 import com.example.workmanager.myUiKit.NormalText
+import com.example.workmanager.myUiKit.ProjectOutlinedTextField
 import com.example.workmanager.myUiKit.sansFamily
 import com.example.workmanager.ui.theme.Black
 import com.example.workmanager.ui.theme.MainPurple
@@ -160,7 +156,7 @@ fun AddDialog(
                         )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
-                    TextField(
+                    /*TextField(
                         value = txtField.value,
                         onValueChange = { txtField.value = it },
                         modifier = Modifier
@@ -182,7 +178,8 @@ fun AddDialog(
                             unfocusedIndicatorColor = Color.Transparent
                         ),
 
-                        )
+                        )*/
+                    ProjectOutlinedTextField(textState = txtField, placeholder = "Название")
                     NormalText(text = timeText)
                     Spacer(modifier = Modifier.height(20.dp))
 
@@ -220,11 +217,12 @@ fun AddDialog(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
+                    // Кнопка "Готово"
                     Card(
                         shape = RoundedCornerShape(14.dp),
                         modifier = Modifier.clickable {
                             if (txtField.value.isEmpty()) {
-                                txtFieldError.value = "Field can not be empty"
+                                txtFieldError.value = "Поле не может быть пустым"
                                 return@clickable
                             }
                             setValue(txtField.value)
