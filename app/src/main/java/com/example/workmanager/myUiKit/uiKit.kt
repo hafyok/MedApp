@@ -1,6 +1,7 @@
 package com.example.workmanager.myUiKit
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,12 +9,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.ChipColors
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -48,7 +59,7 @@ fun NormalText(text: String, modifier: Modifier = Modifier) {
 fun LargeText(
     text: String, modifier: Modifier = Modifier
         .padding(horizontal = 8.dp)
-        //.fillMaxWidth()
+    //.fillMaxWidth()
 ) {
     Text(
         text = text,
@@ -118,7 +129,53 @@ fun ProjectOutlinedTextField(
         onValueChange = { textState.value = it },
         leadingIcon = { Icon(leadingIcon, description) },
         label = { NormalText(text = placeholder, modifier = Modifier.alpha(0.5f)) },
-        keyboardOptions = keyboardOptions
+        keyboardOptions = keyboardOptions,
+
     )
 }
 
+@Composable
+fun LightSuggestionChip(
+    onClick: () -> Unit = {},
+    label: @Composable () -> Unit = { Text(text = "Label") },
+    chipColors: ChipColors = ChipColors(
+        containerColor = MainPurple,
+        labelColor = Black,
+        leadingIconContentColor = Black,
+        trailingIconContentColor = Black,
+        disabledContainerColor = White,
+        disabledLabelColor = Black,
+        disabledLeadingIconContentColor = Black,
+        disabledTrailingIconContentColor = Black
+
+    )
+) {
+    SuggestionChip(
+        onClick = onClick,
+        label = label,
+        border = null,
+        colors = chipColors
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun SingleChoiceSegmentedButton(modifier: Modifier = Modifier) {
+    var selectedIndex by remember { mutableIntStateOf(0) }
+    val options = listOf("шт", "гр", "мл")
+
+    SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
+        options.forEachIndexed { index, label ->
+            SegmentedButton(
+                shape = SegmentedButtonDefaults.itemShape(
+                    index = index,
+                    count = options.size
+                ),
+                onClick = { selectedIndex = index },
+                selected = index == selectedIndex,
+                label = { NormalText(text = label) },
+            )
+        }
+    }
+}

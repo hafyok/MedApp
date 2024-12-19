@@ -45,6 +45,7 @@ import com.example.workmanager.data.MedicamentEntity
 import com.example.workmanager.myUiKit.LargeText
 import com.example.workmanager.myUiKit.MediumButton
 import com.example.workmanager.myUiKit.ProjectOutlinedTextField
+import com.example.workmanager.myUiKit.SingleChoiceSegmentedButton
 import com.example.workmanager.myUiKit.sansFamily
 import com.example.workmanager.ui.theme.BackgroundPurple
 import com.example.workmanager.ui.theme.Black
@@ -165,34 +166,14 @@ fun AddDialog(
                         )
                     }
                     //Spacer(modifier = Modifier.height(20.dp))
-                    /*TextField(
-                        value = txtField.value,
-                        onValueChange = { txtField.value = it },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .border(
-                                BorderStroke(
-                                    width = 2.dp,
-                                    color = colorResource(
-                                        id = if (txtFieldError.value.isEmpty()) android.R.color.holo_green_light
-                                        else android.R.color.holo_red_dark
-                                    )
-                                ),
-                                shape = RoundedCornerShape(50)
-                            ),
-                        shape = RoundedCornerShape(50),
-                        colors = TextFieldDefaults.textFieldColors(
-                            //backgroundColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
-                        ),
 
-                        )*/
                     ProjectOutlinedTextField(textState = txtField, placeholder = "Название")
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    LargeText(text = "Дозировка")
+                    LargeText(text = "Дозировка", modifier = Modifier.padding(vertical = 8.dp))
+
+                    SingleChoiceSegmentedButton()
 
                     ProjectOutlinedTextField(
                         textState = txtDose,
