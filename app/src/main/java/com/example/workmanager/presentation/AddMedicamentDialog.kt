@@ -143,6 +143,7 @@ fun AddDialog(
     val txtField = remember { mutableStateOf(value) }
     val txtDose = remember { mutableStateOf("") }
     val isDone by remember { derivedStateOf { txtField.value.isNotEmpty() && txtDose.value.isNotEmpty() } }
+    val typeDose = remember { mutableStateOf("шт") }
 
     Dialog(onDismissRequest = { setShowDialog(false) }) {
         Surface(
@@ -173,11 +174,11 @@ fun AddDialog(
 
                     LargeText(text = "Дозировка", modifier = Modifier.padding(vertical = 8.dp))
 
-                    SingleChoiceSegmentedButton()
+                    SingleChoiceSegmentedButton(typeDose = typeDose)
 
                     ProjectOutlinedTextField(
                         textState = txtDose,
-                        placeholder = "Кол-во грамм",
+                        placeholder = "Кол-во ${typeDose.value}",
                         leadingIcon = Icons.Filled.CheckCircle,
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                     )

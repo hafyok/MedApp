@@ -131,7 +131,7 @@ fun ProjectOutlinedTextField(
         label = { NormalText(text = placeholder, modifier = Modifier.alpha(0.5f)) },
         keyboardOptions = keyboardOptions,
 
-    )
+        )
 }
 
 @Composable
@@ -159,9 +159,11 @@ fun LightSuggestionChip(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun SingleChoiceSegmentedButton(modifier: Modifier = Modifier) {
+fun SingleChoiceSegmentedButton(
+    modifier: Modifier = Modifier,
+    typeDose: MutableState<String> = mutableStateOf(""),
+) {
     var selectedIndex by remember { mutableIntStateOf(0) }
     val options = listOf("шт", "гр", "мл")
 
@@ -172,7 +174,10 @@ fun SingleChoiceSegmentedButton(modifier: Modifier = Modifier) {
                     index = index,
                     count = options.size
                 ),
-                onClick = { selectedIndex = index },
+                onClick = {
+                    selectedIndex = index
+                    typeDose.value = label
+                },
                 selected = index == selectedIndex,
                 label = { NormalText(text = label) },
             )
