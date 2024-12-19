@@ -9,12 +9,14 @@ data class MedicamentEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val name: String,
     val amount: Float,
-    val time: Long
+    val time: Long,
+    val typeDose: String
 ){
     fun toMedicament(): Medicament = Medicament(
         id = id,
         name = name,
         amount = amount,
-        time = time
+        time = time,
+        typeDose = typeDose
     )
 }

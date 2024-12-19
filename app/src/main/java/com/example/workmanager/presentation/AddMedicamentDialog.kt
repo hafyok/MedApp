@@ -86,7 +86,7 @@ fun AddMedicamentDialog(
             setShowDialog = { showDialog.value = it },
             setValue = {},
             addMedicament = { name ->
-                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB))
+                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB, "шт"))
             },
             addSchedule = {
                 CoroutineScope(Dispatchers.IO).launch {
