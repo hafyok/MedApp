@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -18,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.workmanager.R
 import com.example.workmanager.data.MedicamentEntity
-import com.example.workmanager.myUiKit.ShortButton
 import com.example.workmanager.myUiKit.NormalText
+import com.example.workmanager.myUiKit.ShortButton
 import com.example.workmanager.ui.theme.Black
 import com.example.workmanager.ui.theme.LightPurple
 import java.text.SimpleDateFormat
@@ -32,9 +31,17 @@ fun MedItem(item: MedicamentEntity) {
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth(0.45f),
-        colors = CardColors(containerColor = LightPurple, contentColor = Black, disabledContentColor = Black, disabledContainerColor = Black)
+        colors = CardColors(
+            containerColor = LightPurple,
+            contentColor = Black,
+            disabledContentColor = Black,
+            disabledContainerColor = Black
+        )
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(vertical = 8.dp)) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(vertical = 8.dp)
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -47,30 +54,33 @@ fun MedItem(item: MedicamentEntity) {
                     contentDescription = "flask"
                 )
 
-                Column() {
-                    Row() {
-                        NormalText(text = item.name)
+                Column(
+                    modifier = Modifier.padding(horizontal = 4.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    NormalText(text = item.name)
+                    Row {
+                        Image(
+                            modifier = Modifier.padding(top = 6.dp, end = 6.dp),
+                            painter = painterResource(id = R.drawable.ic_time),
+                            contentDescription = "time"
+                        )
+                        NormalText(text = SimpleDateFormat("HH:mm").format(Date(item.time)))
                     }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 8.dp), horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row {
-                            Image(
-                                modifier = Modifier.padding(top = 3.dp, end = 3.dp),
-                                alignment = Alignment.Center,
-                                painter = painterResource(id = R.drawable.ic_time),
-                                contentDescription = "time"
-                            )
-                            NormalText(text = SimpleDateFormat("HH:mm").format(Date(item.time)))
-                        }
-                        NormalText(text = item.amount.toString(), modifier = Modifier.padding(horizontal = 8.dp))
+                    Row {
+                        Image(
+                            modifier = Modifier.padding(top = 6.dp, end = 6.dp),
+                            painter = painterResource(id = R.drawable.ic_dose),
+                            contentDescription = "time"
+                        )
+                        val itemName = if (item.amount.toString().last()
+                                .toString() == "0"
+                        ) item.amount.toString().substringBefore(".") else item.amount.toString()
+                        NormalText(text = "$itemName ${item.typeDose}")
                     }
-
                 }
+
             }
-            Spacer(modifier = Modifier.padding(vertical = 8.dp))
             ShortButton(
                 text = "Редактировать",
                 onClick = { TODO() },

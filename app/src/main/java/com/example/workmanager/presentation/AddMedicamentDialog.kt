@@ -35,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -85,8 +84,8 @@ fun AddMedicamentDialog(
             value = "",
             setShowDialog = { showDialog.value = it },
             setValue = {},
-            addMedicament = { name ->
-                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, 2f, timeInDB, "шт"))
+            addMedicament = { name, amount, type ->
+                viewModel.insertMedicamentInDb(MedicamentEntity(0, name, amount, timeInDB, type))
             },
             addSchedule = {
                 CoroutineScope(Dispatchers.IO).launch {
@@ -134,7 +133,7 @@ fun AddDialog(
     value: String,
     setShowDialog: (Boolean) -> Unit,
     setValue: (String) -> Unit,
-    addMedicament: (String) -> Unit,
+    addMedicament: (String, Float, String) -> Unit,
     addSchedule: () -> Unit,
     setTimePicker: (Boolean) -> Unit,
     timeText: String,
@@ -224,7 +223,7 @@ fun AddDialog(
                             shape = RoundedCornerShape(14.dp),
                             modifier = Modifier.clickable {
                                 setValue(txtField.value)
-                                addMedicament(txtField.value)
+                                addMedicament(txtField.value, txtDose.value.toFloat(), typeDose.value)
                                 addSchedule()
                                 setShowDialog(false)
                             },
@@ -255,6 +254,7 @@ fun AddDialog(
     }
 }
 
+/*
 @Composable
 @Preview(showSystemUi = true)
 fun PreviewAddDialog() {
@@ -276,4 +276,4 @@ fun PreviewAddDialog() {
             "Время не выбрано"
         }
     )
-}
+}*/

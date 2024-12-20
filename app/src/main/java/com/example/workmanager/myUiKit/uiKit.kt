@@ -63,7 +63,7 @@ fun LargeText(
 ) {
     Text(
         text = text,
-        fontSize = 16.sp,
+        fontSize = 20.sp,
         fontWeight = FontWeight.Medium,
         modifier = modifier,
         fontFamily = sansFamily,
@@ -79,7 +79,7 @@ fun ShortButton(
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier.clickable { onClick() },
+        modifier = modifier.clickable {  },
         colors = CardColors(
             containerColor = White,
             contentColor = Black,
