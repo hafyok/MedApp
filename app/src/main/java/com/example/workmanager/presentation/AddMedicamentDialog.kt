@@ -49,7 +49,6 @@ import com.example.workmanager.myUiKit.sansFamily
 import com.example.workmanager.ui.theme.BackgroundPurple
 import com.example.workmanager.ui.theme.Black
 import com.example.workmanager.ui.theme.MainPurple
-import com.example.workmanager.ui.theme.White
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -185,23 +184,9 @@ fun AddDialog(
 
 
                     Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
                     ) {
-
-                        // TODO() Перенести в strings
-                        MediumButton(
-                            text = "Без напоминаний",
-                            onClick = { setTimePicker(true) },
-                            colors = CardColors(
-                                containerColor = White,
-                                contentColor = Black,
-                                disabledContentColor = Black,
-                                disabledContainerColor = Black
-                            )
-                        )
-
-
                         // TODO() Перенести в strings
                         MediumButton(
                             text = "Выбрать время",
@@ -213,6 +198,7 @@ fun AddDialog(
                                 disabledContainerColor = Black
                             )
                         )
+
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -223,7 +209,11 @@ fun AddDialog(
                             shape = RoundedCornerShape(14.dp),
                             modifier = Modifier.clickable {
                                 setValue(txtField.value)
-                                addMedicament(txtField.value, txtDose.value.toFloat(), typeDose.value)
+                                addMedicament(
+                                    txtField.value,
+                                    txtDose.value.toFloat(),
+                                    typeDose.value
+                                )
                                 addSchedule()
                                 setShowDialog(false)
                             },
