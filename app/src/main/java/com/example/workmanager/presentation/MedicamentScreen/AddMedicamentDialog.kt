@@ -1,4 +1,4 @@
-package com.example.workmanager.presentation
+package com.example.workmanager.presentation.MedicamentScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable

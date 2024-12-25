@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import com.example.workmanager.presentation.MainScreen
+import com.example.workmanager.presentation.MedicamentScreen.MainScreen
 import com.example.workmanager.ui.theme.WorkManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
 

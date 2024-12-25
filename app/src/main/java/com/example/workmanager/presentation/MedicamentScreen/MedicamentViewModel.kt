@@ -1,4 +1,4 @@
-package com.example.workmanager.presentation
+package com.example.workmanager.presentation.MedicamentScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

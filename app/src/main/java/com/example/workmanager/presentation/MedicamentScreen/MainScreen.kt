@@ -1,4 +1,4 @@
-package com.example.workmanager.presentation
+package com.example.workmanager.presentation.MedicamentScreen
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -26,8 +26,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import com.example.workmanager.R
 import com.example.workmanager.myUiKit.LargeText
+import com.example.workmanager.presentation.BottomNavigation.BottomNavigation
+import com.example.workmanager.presentation.BottomNavigation.NavGraph
 import com.example.workmanager.ui.theme.LightBlueBackground
 import com.example.workmanager.ui.theme.White
 
@@ -41,6 +44,8 @@ fun MainScreen(
 ) {
     val medicaments by viewModel.medicaments.observeAsState(emptyList())
     val showDialog = remember { mutableStateOf(false) }
+
+    val navController = rememberNavController()
 
     AddMedicamentDialog(showDialogState = showDialog)
 
@@ -70,7 +75,10 @@ fun MainScreen(
                 }
             }
         },
-        containerColor = LightBlueBackground
+        containerColor = LightBlueBackground,
+        bottomBar = {
+            BottomNavigation(navController = navController)
+        }
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize()) {
             // Возможно лучше перенести TopCard в topBar в Scaffold
@@ -85,6 +93,7 @@ fun MainScreen(
                 }
             }
         }
+        NavGraph(navHostController = navController)
 
     }
 }
