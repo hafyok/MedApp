@@ -41,7 +41,7 @@ fun TopCard() {
                 )
         )
         {
-            Text(text = "Card Gradient Background")
+            //Text(text = "Card Gradient Background")
         }
 
     }
