@@ -1,5 +1,6 @@
 package com.example.workmanager.presentation.MedicamentScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.Data
@@ -23,6 +24,9 @@ class MedicamentViewModel @Inject constructor(
     private val doseScheduleRepository: DoseScheduleRepository,
     private val workManager: WorkManager
 ) : ViewModel() {
+    init {
+        Log.d("BugFounder", "MedicamentViewModel init")
+    }
     private val workName = "AlarmWorker"
 
     val medicaments = medicamentRepository.getMedicaments()
